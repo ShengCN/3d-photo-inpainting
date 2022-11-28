@@ -8,6 +8,7 @@ import vispy
 import scipy.misc as misc
 from tqdm import tqdm
 import yaml
+from yaml import Loader
 import time
 import sys
 from mesh import write_ply, read_ply, output_3d_photo
@@ -35,17 +36,16 @@ logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s - %(
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--config', type=str, default='argument.yml',help='Configure of post processing')
-parser.add_argument('--csv', type=str, help='input csv')
-parser.add_argument('--outfolder', type=str, help='output folder')
 args = parser.parse_args()
 
 # import pdb; pdb.set_trace()
-config = yaml.load(open(args.config, 'r'))
+config = yaml.load(open(args.config, 'r'), Loader=Loader)
+
 # copy rgbs in the image folder
-root = os.path.dirname(args.csv)
-df = pd.read_csv(args.csv)
-for i, v in tqdm(df.iterrows(), total=len(df), desc='3d photo, copying...'):
-    shutil.copy(join(root, df.at[i, 'rgb']), join('image', os.path.basename(df.at[i, 'rgb'])))
+# root = os.path.dirname(args.csv)
+# df = pd.read_csv(args.csv)
+# for i, v in tqdm(df.iterrows(), total=len(df), desc='3d photo, copying...'):
+#     shutil.copy(join(root, df.at[i, 'rgb']), join('image', os.path.basename(df.at[i, 'rgb'])))
 
 if config['offscreen_rendering'] is True:
     vispy.use(app='egl')
