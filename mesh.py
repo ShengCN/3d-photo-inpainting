@@ -24,6 +24,7 @@ from mesh_tools import refresh_bord_depth, enlarge_border, fill_dummy_bord, extr
 import transforms3d
 import random
 from functools import reduce
+import pickle
 
 def create_mesh(depth, image, int_mtx, config):
     H, W, C = image.shape
@@ -1998,6 +1999,12 @@ def write_ply(image,
         input_mesh.graph['cam_param_pix_inv'][1, 1], input_mesh.graph['cam_param_pix_inv'][1, 2]
     w_offset = input_mesh.graph['woffset']
     h_offset = input_mesh.graph['hoffset']
+
+    import pdb; pdb.set_trace()
+    with open('test.bin', 'wb') as f:
+        pickle.dump(info_on_pix, f)
+
+
     for pix_xy, pix_list in info_on_pix.items():
         for pix_idx, pix_info in enumerate(pix_list):
             pix_depth = pix_info['depth'] if pix_info.get('real_depth') is None else pix_info['real_depth']
