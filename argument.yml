@@ -17,8 +17,8 @@ depth_folder: depth
 mesh_folder: mesh
 video_folder: video
 load_ply: False
-save_ply: True
-inference_video: True
+save_ply: False 
+inference_video: False 
 gpu_ids: 0
 offscreen_rendering: False
 img_format: '.jpg'

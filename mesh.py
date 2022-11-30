@@ -1826,7 +1826,8 @@ def write_ply(image,
               rgb_model,
               depth_edge_model,
               depth_edge_model_init,
-              depth_feat_model):
+              depth_feat_model,
+              pix_ofname=None):
     depth = depth.astype(np.float64)
     input_mesh, xy2depth, image, depth = create_mesh(depth, image, int_mtx, config)
 
@@ -2038,6 +2039,10 @@ def write_ply(image,
                 node_str_color.append(str_color)
                 node_str_point.append(str_pt)
     str_faces = generate_face(input_mesh, info_on_pix, config)
+    if pix_ofname is not None:
+        with open(pix_ofname, 'wb') as handle:
+            pickle.dump(info_on_pix, handle)
+
     if config['save_ply'] is True:
         print("Writing mesh file %s ..." % ply_name)
         with open(ply_name, 'w') as ply_fi:
